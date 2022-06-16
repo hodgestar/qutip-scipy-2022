@@ -14,11 +14,8 @@ jobs:
           environment-file: ./environment.yml
     - name: "Install pytest and nbmake"
       run: |
-        # pytest and nbmake are installed in a separate environmnet
-        # in order to avoid accidentally providing missing dependencies
-        python -m venv testutils
-        ./testutils/bin/pip install pytest nbmake
+        pip install pytest nbmake
     - name: Run pre-tutorial notebook test
       run: |
         jupyter kernel &
-        ./testutils/bin/pytest --nbmake pre-tutorial-test.ipynb --nbmake-timeout=500
+        pytest --nbmake pre-tutorial-test.ipynb --nbmake-timeout=500
