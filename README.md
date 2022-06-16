@@ -3,7 +3,7 @@
 Presenter:
 - **Simon Cross**
 
-Institution:
+Institutions:
 - **[RIKEN](https://www.riken.jp/en/)**,
   **[Theoretical Quantum Physics Laboratory](https://dml.riken.jp/)**
 - **[QuTiP](https://qutip.org)**
