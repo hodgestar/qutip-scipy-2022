@@ -83,8 +83,8 @@ button below:
 
 Or by using [Google Colab](https://colab.research.google.com/github/hodgestar/qutip-scipy-2022/blob/main/).
 
-If you are using Google Colab, you'll need to uncomment and run the cell that
-installs QuTiP for you (it is immediately after the initial instructions).
+If you are using Google Colab, you'll need to first install QuTiP by running
+the command `!pip install 'qutip[full]'` in a cell by itself.
 
 
 ## Testing your installation
