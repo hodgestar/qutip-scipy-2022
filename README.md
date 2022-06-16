@@ -79,7 +79,7 @@ but if that really isn't possible, you are welcome to try running Jupyter
 and the necessary dependencies online using either Binder, by clicking the
 button below:
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hodgestar/qutip-tutorial-2022/main)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hodgestar/qutip-scipy-2022/main)
 
 Or by using [Google Colab](https://colab.research.google.com/).
 
