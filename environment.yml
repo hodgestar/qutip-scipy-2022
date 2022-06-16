@@ -1,6 +1,7 @@
 name: qutip-tutorial-env
 channels:
   - conda-forge
+  - defaults
 dependencies:
   - python=3.9
   - qutip=4.7.0
