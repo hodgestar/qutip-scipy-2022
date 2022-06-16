@@ -81,7 +81,10 @@ button below:
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hodgestar/qutip-scipy-2022/main)
 
-Or by using [Google Colab](https://colab.research.google.com/).
+Or by using [Google Colab](https://colab.research.google.com/github/hodgestar/qutip-scipy-2022/blob/main/).
+
+If you are using Google Colab, you'll need to uncomment and run the cell that
+installs QuTiP for you (it is immediately after the initial instructions).
 
 
 ## Testing your installation
