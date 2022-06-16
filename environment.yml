@@ -1,0 +1,6 @@
+name: qutip-tutorial-env
+dependencies:
+  - python >= 3.9
+  - qutip == 4.7.0
+  - jupyter == 1.0.0
+  - matplotlib == 3.5.2
