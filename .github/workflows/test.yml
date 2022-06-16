@@ -13,6 +13,12 @@ jobs:
           auto-activate-base: false
           activate-environment: qutip-tutorial-env
           environment-file: ./environment.yml
+    - name: "Environment informaton"
+      run: |
+        python -V
+        conda env list
+        conda list
+        python -c "import qutip; qutip.about()"
     - name: "Install pytest and nbmake"
       run: |
         pip install pytest nbmake
