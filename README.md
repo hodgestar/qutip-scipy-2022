@@ -1,9 +1,11 @@
 # SciPy 2022 Tutorial: Exploring open quantum systems with QuTiP
 
-**Presenter**: **Simon Cross**
+Presenter:
+- **Simon Cross**
 
-**[RIKEN](https://riken.jp)**,
-**[Theoretical Quantum Physics Laboratory](https://dml.riken.jp/)**
+Institution:
+- **[RIKEN](https://riken.jp)**,
+  **[Theoretical Quantum Physics Laboratory](https://dml.riken.jp/)**
 
 ## Hello!
 
