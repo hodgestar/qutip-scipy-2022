@@ -13,6 +13,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
     - name: "Install requirements"
       run: |
+        conda init bash
         conda env create --file environment.yml
         conda activate qutip-tutorial-env
     - name: "Install testing utilities"
