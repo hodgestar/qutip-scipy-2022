@@ -2,6 +2,10 @@ name: test
 
 on: [push, pull_request]
 
+defaults:
+  run:
+    shell: bash -l {0}
+
 jobs:
   pre-tutorial-test:
     runs-on: ubuntu-latest
@@ -14,18 +18,15 @@ jobs:
           auto-activate-base: false
           python-version: "3.9"
     - name: "Environment informaton"
-      shell: bash -l {0}
       run: |
         python -V
         conda info
         conda list
         python -c "import qutip; qutip.about()"
     - name: "Install pytest and nbmake"
-      shell: bash -l {0}
       run: |
         pip install pytest nbmake
     - name: Run pre-tutorial notebook test
-      shell: bash -l {0}
       run: |
         jupyter kernel &
         pytest --nbmake pre-tutorial-test.ipynb --nbmake-timeout=500
