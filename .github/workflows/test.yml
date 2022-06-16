@@ -16,7 +16,7 @@ jobs:
     - name: "Environment informaton"
       run: |
         python -V
-        conda env list
+        conda info
         conda list
         python -c "import qutip; qutip.about()"
     - name: "Install pytest and nbmake"
