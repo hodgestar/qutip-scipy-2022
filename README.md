@@ -24,6 +24,10 @@ To get set up you'll need to do the following:
 3. Check that everything is working by running the `pre-tutorial-test.ipynb`
    Jupyter notebook.
 
+4. If this is your very first encounter with quantum mechanics, I have
+   recommended some videos to watch before you arrive at the tutorial, just
+   so that not everything is completely new to you on the day.
+
 There are instructions for what to do if you get stuck further down.
 
 Don't panic, have fun and see you at the tutorial!
@@ -105,6 +109,56 @@ This repository contains everything you need for the tutorial.
 
 It's possible it will be updated between now and mid-July, so please check back
 a few days before the tutorial to see if there is anything new.
+
+
+## What to do if you're new to quantum mechanics
+
+Remain calm! Everything is going to be okay.
+
+To prepare for the tutorial if you've never done any quantum mechanics
+before, I recommend that you watch the first six YouTube videos from
+a series called
+[Quantum computing for the determined](https://www.youtube.com/playlist?list=PL1826E60FD05B44E4)
+by Michael Nielsen. It'll mean fewer new concepts to grapple with on the
+day, and will allow you gain more from tutorial itself.
+
+Nielsen wrote *the*
+[standard textbook on quantum computation](https://en.wikipedia.org/wiki/Quantum_Computation_and_Quantum_Information)
+with Isaac Chuang. He presents everything slowly and clearly, and in a
+very down to earth way.
+
+The first six videos are:
+
+* [The qubit](https://youtu.be/X2q1PuI2RFI)
+* [Tips for working with qubits](https://youtu.be/Jo-RZ27o3Uw)
+* [Our first quantum gate: the quantum NOT gate](https://youtu.be/JDDSjsQLv80)
+* [The Hadamard gate](https://youtu.be/x6gOp_o7Bi8)
+* [Measuring a qubit](https://youtu.be/SMbh0GgCN7I)
+* [General single-qubit gates](https://youtu.be/SWKuH9emuag)
+
+Don't be afraid to watch a video multiple times if you need to. They're not
+particularly long, and sometimes just taking a break and going through the
+material a second time really helps.
+
+You're welcome to watch the rest of the series if you like too. Our tutorial
+focuses much more on simulating real atoms, and so it heads in a different
+direction to Nielsen's series.
+
+If you'd like to brush up on vectors and matrices, Nielsen recommends looking
+at the
+[Khan Academy, Linear Algebra](https://www.khanacademy.org/math/linear-algebra)
+videos, and I second the recommendation.
+
+If you encounter any questions while going through the videos, you're welcome
+to ask me via the conference channels (see below) or bring them with you to
+the tutorial.
+
+
+## What to do if you're NOT new to quantum mechanics
+
+You're probably all set for what you need to know, and ready to diagonalise
+some Hamiltonians, solve Schrödinger's equation, find out what a Liouvillian
+is, and explore QuTiP!
 
 
 ## What to do if you're stuck
