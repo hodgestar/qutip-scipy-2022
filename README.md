@@ -172,7 +172,6 @@ If you're looking for help with QuTiP, you can message the
 [QuTiP Google Group](https://groups.google.com/g/qutip), and I or someone
 else will reply there.
 
-If you'd like to contact me directly, you can do so via the conference
-channels. I'm not sure what the conference channels are yet, but in the
-past there was a SciPy conference Slack channel. I'll add the details here
-once I have them.
+If you'd like to contact me directly, you can do so via the SciPy 2022
+conference Slack. Please come say hello in the `#tutorial-open-quantum-sys`
+channel.
