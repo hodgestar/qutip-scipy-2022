@@ -173,5 +173,5 @@ If you're looking for help with QuTiP, you can message the
 else will reply there.
 
 If you'd like to contact me directly, you can do so via the SciPy 2022
-conference Slack. Please come say hello in the `#tutorial-open-quantum-sys`
-channel.
+conference Slack. Please come say hello in the
+`#tutorial-open-quantum-systems-qutip` channel.
