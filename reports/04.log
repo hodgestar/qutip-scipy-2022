@@ -1,0 +1,70 @@
+Traceback (most recent call last):
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+ax = naq.ax(
+    1, 1,
+    xlim=(-0.25, 2.25),
+    ylim=(-0.25, 1.25),
+    xticks=[], yticks=[],
+    title="Rydberg blockade",
+    ylabel="Energy",
+    xlabel="r",
+)
+
+def rydberg_energy(r, C, E):
+    return E + C / (r**6)
+
+def plot_rydberg_energy(r, C, E, ax=None):
+    energy = rydberg_energy(r, C, E)
+    ax.plot(r, energy, color="b", linestyle="--", alpha=0.5)
+
+naq.plot_energy_levels(ax, [
+    ("|rr>", 1.0),
+    ("|1>", 0.3),
+    ("|0>", 0.1),
+], xmid=0.2)
+
+naq.plot_energy_levels(ax, [
+    ("|rr>", 0.6),
+    ("|1>", 0.3),
+    ("|0>", 0.1),
+], xmid=1.2)
+
+r = np.linspace(0.1, 1.9, 100)
+plot_rydberg_energy(r, 1e-4, 0.6, ax=ax)
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Input [0;32mIn [1][0m, in [0;36m<cell line: 1>[0;34m()[0m
+[0;32m----> 1[0m ax [38;5;241m=[39m [43mnaq[49m[38;5;241m.[39max(
+[1;32m      2[0m     [38;5;241m1[39m, [38;5;241m1[39m,
+[1;32m      3[0m     xlim[38;5;241m=[39m([38;5;241m-[39m[38;5;241m0.25[39m, [38;5;241m2.25[39m),
+[1;32m      4[0m     ylim[38;5;241m=[39m([38;5;241m-[39m[38;5;241m0.25[39m, [38;5;241m1.25[39m),
+[1;32m      5[0m     xticks[38;5;241m=[39m[], yticks[38;5;241m=[39m[],
+[1;32m      6[0m     title[38;5;241m=[39m[38;5;124m"[39m[38;5;124mRydberg blockade[39m[38;5;124m"[39m,
+[1;32m      7[0m     ylabel[38;5;241m=[39m[38;5;124m"[39m[38;5;124mEnergy[39m[38;5;124m"[39m,
+[1;32m      8[0m     xlabel[38;5;241m=[39m[38;5;124m"[39m[38;5;124mr[39m[38;5;124m"[39m,
+[1;32m      9[0m )
+[1;32m     11[0m [38;5;28;01mdef[39;00m [38;5;21mrydberg_energy[39m(r, C, E):
+[1;32m     12[0m     [38;5;28;01mreturn[39;00m E [38;5;241m+[39m C [38;5;241m/[39m (r[38;5;241m*[39m[38;5;241m*[39m[38;5;241m6[39m)
+
+[0;31mNameError[0m: name 'naq' is not defined
+NameError: name 'naq' is not defined
+

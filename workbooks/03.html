@@ -1,0 +1,949 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>03: Describing a qubit &#8212; Neutral Atoms with QuTiP</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fourth hour" href="04.html" />
+    <link rel="prev" title="02: A Single Atom" href="02.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Neutral Atoms with QuTiP</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Neutal Atoms with QuTiP
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Background on Neutral Atoms
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../outline.html">
+   Outline
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Simulation Workbooks
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="00.html">
+   00: QuTiP and Open Quantum Systems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="01.html">
+   01: Neutral Atom Devices
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02.html">
+   02: A Single Atom
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   03: Describing a qubit
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04.html">
+   Fourth hour
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Backmatter
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../build-stats.html">
+   Build information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../references.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hodgestar/naqbok/master?urlpath=tree/naqbok/workbooks/03.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/hodgestar/naqbok"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/hodgestar/naqbok/issues/new?title=Issue%20on%20page%20%2Fworkbooks/03.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/workbooks/03.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download notebook file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="../_sources/workbooks/03.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#building-quantum-states">
+   Building quantum states
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bloch-sphere">
+   Bloch sphere
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>03: Describing a qubit</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#building-quantum-states">
+   Building quantum states
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bloch-sphere">
+   Bloch sphere
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="cell tag_margin docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">YouTubeVideo</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_margin docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qutip</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">naq</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="describing-a-qubit">
+<h1>03: Describing a qubit<a class="headerlink" href="#describing-a-qubit" title="Permalink to this headline">#</a></h1>
+<section id="building-quantum-states">
+<h2>Building quantum states<a class="headerlink" href="#building-quantum-states" title="Permalink to this headline">#</a></h2>
+<p>Let’s review our two basis states:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Our two basis states:</span>
+<span class="n">b0</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">basis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># 6s</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">basis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 7s</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>When writing these mathematically we write <span class="math notranslate nohighlight">\(\left\vert 0 \right\rangle\)</span> and
+<span class="math notranslate nohighlight">\(\left\vert 1 \right\rangle\)</span>.</p>
+<p>The states <code class="docutils literal notranslate"><span class="pre">b0</span></code> and <code class="docutils literal notranslate"><span class="pre">b1</span></code> are instances of <code class="docutils literal notranslate"><span class="pre">Qobj</span></code>, which qutip uses to
+represent all sorts of quantum objects.</p>
+<p>Let’s take a closer look at <code class="docutils literal notranslate"><span class="pre">b0</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">b0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket
+Qobj data =
+[[1.]
+ [0.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Qobj</span> <span class="pre">data</span></code> is the array that represents our quantum state. As you can
+see, it’s just a column vector:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix} 1 \\ 0 \end{bmatrix}
+\end{split}\]</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">shape</span></code> is just the shape of the data – i.e. <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">1)</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">type</span></code> says this is a <code class="docutils literal notranslate"><span class="pre">ket</span></code> which is the strange word physicists use to
+say that it is a quantum state.</p>
+<p>The word <code class="docutils literal notranslate"><span class="pre">dims</span></code> is short for dimensions. It describes how the state is built
+up from smaller states. Since our state has no smaller states, it currently
+looks identical to the shape. We’ll look at this again when we add more
+atoms later on.</p>
+<p>You can also access this informaton using attributes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">b0</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b0</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b0</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ket
+(2, 1)
+[[2], [1]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we look at <code class="docutils literal notranslate"><span class="pre">b1</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket
+Qobj data =
+[[0.]
+ [1.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s just the column vector:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix} 0 \\ 1 \end{bmatrix}
+\end{split}\]</div>
+<p>If you’re familiar with vector spaces, you’ll already recognize these two
+column vectors as basis vectors, and indeed the space of quantum state will
+be a vector space.</p>
+<p>The other states that can be built from our two basis states are:</p>
+<div class="math notranslate nohighlight">
+\[
+\left\vert \psi \right\rangle = a_0 \left\vert 0 \right\rangle + a_1 \left\vert 1 \right\rangle
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(a_0\)</span> and <span class="math notranslate nohighlight">\(b_0\)</span> are any two complex numbers.</p>
+<p>These two numbers are called <code class="docutils literal notranslate"><span class="pre">amplitudes</span></code>. For our particular basis they have
+the interpretation that if we measure the energy of the state
+<span class="math notranslate nohighlight">\(\left\vert \psi \right\rangle\)</span> there is a probability <span class="math notranslate nohighlight">\(|a_0|^2\)</span> that the
+energy measured will be the energy of the state <code class="docutils literal notranslate"><span class="pre">b0</span></code> (i.e. the energy of the
+electron in state <code class="docutils literal notranslate"><span class="pre">6s</span></code>) and a probability <span class="math notranslate nohighlight">\(|a_1|^2\)</span> that the energy measured
+will be the energy of the state <code class="docutils literal notranslate"><span class="pre">b1</span></code> (i.e. the energy of the electron in
+state <code class="docutils literal notranslate"><span class="pre">7s</span></code>).</p>
+<p>This association of <code class="docutils literal notranslate"><span class="pre">amplitudes</span></code> with probabilities is called “Born’s Rule”
+and is one of the axioms of quantum mechanics (albeit one which many people
+would like to remove).</p>
+<p>Since the probabilities should sum to one, we have the constraint that
+<span class="math notranslate nohighlight">\(|a_0|^2 + |a_1|^2 = 1\)</span>.</p>
+<p>The value <span class="math notranslate nohighlight">\(|a_0|^2 + |a_1|^2\)</span> is the length of the vector squared, so the
+constraint is that the length of the vector describing the state should be 1.</p>
+<p>We can construct these in qutip in exactly the way you would expect. Let’s
+construct some more ourselves:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">b0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b0</span> <span class="o">-</span> <span class="n">b1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b0</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">b1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket
+Qobj data =
+[[0.+1.j]
+ [0.+0.j]]
+Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket
+Qobj data =
+[[1.]
+ [1.]]
+Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket
+Qobj data =
+[[ 1.]
+ [-1.]]
+Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket
+Qobj data =
+[[1.+0.j]
+ [0.-1.j]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>You’ll notice that these vectors no longer have length one. In fact they
+have length <span class="math notranslate nohighlight">\(\sqrt{2}\)</span>. This is no good. QuTiP has some functions to help.</p>
+<p>The method <code class="docutils literal notranslate"><span class="pre">.norm()</span></code> returns the length:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psi</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">psi</span><span class="o">.</span><span class="n">norm</span><span class="p">())</span>  <span class="c1"># prints the length</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">psi</span><span class="o">.</span><span class="n">norm</span><span class="p">())</span>  <span class="c1"># prints the inverse of the length</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.4142135623730951
+0.7071067811865475
+</pre></div>
+</div>
+</div>
+</div>
+<p>And the method <code class="docutils literal notranslate"><span class="pre">.unit()</span></code> divides a state by it’s length, returning a new
+state of length 1:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psi_unit</span> <span class="o">=</span> <span class="n">psi</span><span class="o">.</span><span class="n">unit</span><span class="p">()</span>  <span class="c1"># divide a vector by it&#39;s length, so that it ends u</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">psi_unit</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Length: </span><span class="si">{</span><span class="n">psi_unit</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket
+Qobj data =
+[[0.70710678]
+ [0.70710678]]
+Length: 0.9999999999999999
+</pre></div>
+</div>
+</div>
+</div>
+<p>There is also another way that we write the length:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Length squared: </span><span class="si">{</span><span class="n">psi</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">psi</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Length squared: Quantum object: dims = [[1], [1]], shape = (1, 1), type = bra
+Qobj data =
+[[2.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s look at <code class="docutils literal notranslate"><span class="pre">b0.dag()</span></code> and <code class="docutils literal notranslate"><span class="pre">(1j</span> <span class="pre">*</span> <span class="pre">b0).dag()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">b0</span><span class="o">.</span><span class="n">dag</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">((</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">b0</span><span class="p">)</span><span class="o">.</span><span class="n">dag</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Quantum object: dims = [[1], [2]], shape = (1, 2), type = bra
+Qobj data =
+[[1. 0.]]
+Quantum object: dims = [[1], [2]], shape = (1, 2), type = bra
+Qobj data =
+[[0.-1.j 0.+0.j]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that <code class="docutils literal notranslate"><span class="pre">b0.dag()</span></code> is just the transpose of <code class="docutils literal notranslate"><span class="pre">b0</span></code>. It’s shape is <code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2)</span></code>
+and the dimensions are also swapped. It’s <code class="docutils literal notranslate"><span class="pre">type</span></code> is <code class="docutils literal notranslate"><span class="pre">bra</span></code> which is the
+physicist way of saying it is a row vector.</p>
+<p>However <code class="docutils literal notranslate"><span class="pre">(1j</span> <span class="pre">*</span> <span class="pre">b0).dag()</span></code> is a bit different. It’s the transpose, but the
+imaginary part also has an minus sign in front of it. This is called
+the complex conjugate.</p>
+<p>So <code class="docutils literal notranslate"><span class="pre">.dag()</span></code> transposes the vector and applies the complex conjugate to each
+element. Mathematicians call this the <code class="docutils literal notranslate"><span class="pre">adjoint</span></code>.</p>
+<p>In mathematical notation we write <span class="math notranslate nohighlight">\( {\left\vert \psi \right\rangle}^{\dagger} \)</span>
+as <span class="math notranslate nohighlight">\( \left\langle \psi \right\vert \)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+{\left\vert \psi \right\rangle}^{\dagger}
+&amp; = \begin{bmatrix} \alpha \\ \beta \end{bmatrix}^{\dagger}
+&amp; =
+&amp; \begin{bmatrix} \alpha^{*} &amp; \beta^{*} \end{bmatrix}
+&amp; = \left\langle \psi \right\vert
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\( \alpha^{*} = (a + i b)^{*} = a - i b \)</span>.</p>
+<p>Now when we multiply the the adjoint of a state by the state itself, we
+get an expression called the “inner product” that we can write as:</p>
+<ul class="simple">
+<li><p>in QuTiP: <code class="docutils literal notranslate"><span class="pre">b0.dag()</span> <span class="pre">*</span> <span class="pre">b0</span></code></p></li>
+<li><p>as vector multiplication: <span class="math notranslate nohighlight">\( \begin{bmatrix} \alpha^{*} &amp; \beta^{*} \end{bmatrix} \begin{bmatrix} \alpha \\ \beta \end{bmatrix} \)</span></p></li>
+<li><p>by just multiplying everything out: <span class="math notranslate nohighlight">\( a^* a + b^* b = |a|^2 + |b|^2 \)</span></p></li>
+<li><p>how physicists write it: <span class="math notranslate nohighlight">\( \left\langle \psi \vert \psi \right\rangle \)</span></p></li>
+</ul>
+<p>The “inner product” is also called a “bra-ket” (a bracket) because of the way
+it is written. The <code class="docutils literal notranslate"><span class="pre">bra</span></code> (the adjoint of a state) is the left part of the
+bracket and the <code class="docutils literal notranslate"><span class="pre">ket</span></code> (a state) is the right part. It’s a bit silly, but
+very useful in practice.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">b0</span> <span class="pre">*</span> <span class="pre">b0.dag()</span></code> (a <code class="docutils literal notranslate"><span class="pre">ket-bra</span></code>) is something completely different!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ket_bra</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">*</span> <span class="n">b0</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ket_bra</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Quantum object: dims = [[2], [2]], shape = (2, 2), type = oper, isherm = True
+Qobj data =
+[[1. 0.]
+ [0. 0.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>It has shape <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2)</span></code> and dimensions <code class="docutils literal notranslate"><span class="pre">[[2],</span> <span class="pre">[2]]</span></code> and is of type <code class="docutils literal notranslate"><span class="pre">oper</span></code> which
+is short for <code class="docutils literal notranslate"><span class="pre">operator</span></code>. As you can see, this one is a two by two matrix –
+i.e. it transforms one state into another.</p>
+<p>There is one final wrinkle in how the states are structured. In quantum
+mechanics, the values we can measure depend on the magnitude of the
+amplitudes, i.e. <span class="math notranslate nohighlight">\( \alpha \)</span> and <span class="math notranslate nohighlight">\( \beta \)</span>, but only on the <em>differences</em>
+between phases of the amplitudes.</p>
+<p>This means that if two states are related by being multiplied
+by <span class="math notranslate nohighlight">\( e^{i \theta} \)</span> for some angle <span class="math notranslate nohighlight">\( \theta \)</span>, so that
+<span class="math notranslate nohighlight">\( \psi_1 = e^{i \theta} \psi_2 \)</span>, then <span class="math notranslate nohighlight">\( \psi_1 \)</span> and <span class="math notranslate nohighlight">\( \psi_2 \)</span> are
+indistinguishable states. That is, they are really the same state!</p>
+<p>When working with states, QuTiP and physicists both typically ignore this
+while doing calculations. They don’t try to ensure that the same state
+always has the same <span class="math notranslate nohighlight">\( \alpha \)</span> and <span class="math notranslate nohighlight">\( \beta \)</span>. Instead they remember that
+only the differences of the phases are measurable, and are careful about
+checking whether two states are the same.</p>
+<p>For example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0_phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">5</span><span class="p">)</span> <span class="o">*</span> <span class="n">b0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b0_phase</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Equal: </span><span class="si">{</span><span class="n">b0</span> <span class="o">==</span> <span class="n">b0_phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Quantum object: dims = [[2], [1]], shape = (2, 1), type = ket
+Qobj data =
+[[0.80901699+0.58778525j]
+ [0.        +0.j        ]]
+Equal: False
+</pre></div>
+</div>
+</div>
+</div>
+<p>So the default equality check treats these as different states. To test
+whether two states are the same state, we use the inner product of the
+two states, which is only equal to one if the objects represent the
+same physical state.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">b0</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">b0_phase</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b0</span><span class="o">.</span><span class="n">overlap</span><span class="p">(</span><span class="n">b0_phase</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Quantum object: dims = [[1], [1]], shape = (1, 1), type = bra
+Qobj data =
+[[0.80901699+0.58778525j]]
+(0.8090169943749475+0.5877852522924731j)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">.overlap()</span></code> method calculates the inner product of the two states,
+i.e., <span class="math notranslate nohighlight">\( \left\langle \psi_1 \vert \psi_2 \right\rangle \)</span>.</p>
+<p>There is also a great way to visualize states made from two basis elements
+which we will cover next.</p>
+</section>
+<section id="bloch-sphere">
+<h2>Bloch sphere<a class="headerlink" href="#bloch-sphere" title="Permalink to this headline">#</a></h2>
+<p>We can write any state made from two basis states as:</p>
+<div class="math notranslate nohighlight">
+\[
+\left\vert \psi \right\rangle
+= \alpha \left\vert 0 \right\rangle + \beta \left\vert 1 \right\rangle
+\]</div>
+<p>but we still need to introduce the constraint
+<span class="math notranslate nohighlight">\( |\alpha|^2 + |\beta|^2 = 1\)</span> and ensure that we used only the
+difference in phase between <span class="math notranslate nohighlight">\( \alpha \)</span> and <span class="math notranslate nohighlight">\( \beta \)</span>.</p>
+<p>We can satisfy the first constraint by recognising it as requiring that
+the magnitudes of <span class="math notranslate nohighlight">\( \alpha \)</span> and <span class="math notranslate nohighlight">\( \beta \)</span> lie on a circle and writing
+them as the sine and cosine of the angle around the circle:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+|\alpha| = sin(\theta / 2) \\
+|\beta| = cos(\theta / 2)
+\end{split}\]</div>
+<p>Now if we write the difference in phase between <span class="math notranslate nohighlight">\( \alpha \)</span> and <span class="math notranslate nohighlight">\( \beta \)</span>
+as <span class="math notranslate nohighlight">\(e^{i \phi}\)</span>, then we can write <span class="math notranslate nohighlight">\( \psi \)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[
+\left\vert \psi \right\rangle = cos(\theta / 2) \left\vert \psi \right\rangle
++ e^{i \phi} sin(\theta / 2)
+\]</div>
+<p>These two angles <span class="math notranslate nohighlight">\( \theta \)</span> and <span class="math notranslate nohighlight">\( \phi \)</span> can be interpreted as spherical the
+spherical coordinates of the points of a sphere!</p>
+<figure class="align-default" id="bloch-sphere-theta-phi">
+<img alt="../_images/bloch-sphere.wikipedia.png" src="../_images/bloch-sphere.wikipedia.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">How the angles <span class="math notranslate nohighlight">\( \theta \)</span> and <span class="math notranslate nohighlight">\( \phi \)</span> relate to the Bloch sphere.</span><a class="headerlink" href="#bloch-sphere-theta-phi" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>This representation of the space of all states made from two basis elements
+is called the Bloch sphere.</p>
+<p>We can draw it in QuTiP like so:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bloch</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Bloch</span><span class="p">()</span>
+<span class="n">bloch</span><span class="o">.</span><span class="n">vector_color</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">]</span>
+<span class="n">bloch</span><span class="o">.</span><span class="n">add_states</span><span class="p">([</span><span class="n">b0</span><span class="p">,</span> <span class="n">b1</span><span class="p">])</span>
+<span class="n">bloch</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/03_27_0.png" src="../_images/03_27_0.png" />
+</div>
+</div>
+<p>Note that our basis states <code class="docutils literal notranslate"><span class="pre">b0</span></code> and <code class="docutils literal notranslate"><span class="pre">b1</span></code> are the poles of the sphere,
+which might be a bit unexpected since <code class="docutils literal notranslate"><span class="pre">b0.dag()</span> <span class="pre">*</span> <span class="pre">b1</span></code> is <code class="docutils literal notranslate"><span class="pre">0</span></code>. If we
+were to consider the two vectors in 3D space, then <code class="docutils literal notranslate"><span class="pre">b0.dag()</span> <span class="pre">*</span> <span class="pre">b1</span></code> would
+equal <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</p>
+<p>Let’s check that if we change the overall phase of a state, it doesn’t
+change where the state appears on the Bloch sphere:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">states</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">b0</span> <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">thetas</span><span class="p">]</span>
+
+<span class="n">bloch</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Bloch</span><span class="p">()</span>
+<span class="n">bloch</span><span class="o">.</span><span class="n">vector_color</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">]</span>
+<span class="n">bloch</span><span class="o">.</span><span class="n">add_states</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+<span class="n">bloch</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/03_29_0.png" src="../_images/03_29_0.png" />
+</div>
+</div>
+<p>But if we change the relative phase, then the states are different:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">states</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="p">)</span><span class="o">.</span><span class="n">unit</span><span class="p">()</span>
+  <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">thetas</span>
+<span class="p">]</span>
+
+<span class="n">bloch</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">Bloch</span><span class="p">()</span>
+<span class="n">bloch</span><span class="o">.</span><span class="n">vector_color</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">]</span>
+<span class="n">bloch</span><span class="o">.</span><span class="n">add_states</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+<span class="n">bloch</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/03_31_0.png" src="../_images/03_31_0.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./workbooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="02.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">02: A Single Atom</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="04.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Fourth hour</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Simon Cross<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

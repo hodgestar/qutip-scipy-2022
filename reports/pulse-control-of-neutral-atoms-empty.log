@@ -1,0 +1,70 @@
+Traceback (most recent call last):
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/simon/venvs/py3/qutip-scipy-2022/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+atoms = [(1, 0), (0, 1)]
+circuit = NeutralAtomCircuit(atoms)
+
+# Example circuit 1: Pretty sequence of rotations the form a closed loop (qubit 0)
+#circuit.rx(0, np.pi / 4)
+#circuit.rz(0, np.pi / 4)
+#circuit.ry(0, np.pi / 4)
+
+# Example circuit 2: Pretty sequence of rotations the form a closed loop (qubit 1)
+#circuit.rx(1, np.pi / 4)
+#circuit.rz(1, np.pi / 4)
+#circuit.ry(1, np.pi / 4)
+
+# Example circuit 3:
+# Combine the two pervious circuits into one
+
+# Example circuit 4: Apply a CNOT
+# CNOT = (I ⊗ H)CZ(I ⊗ H)
+# H = X Ry(pi/2)
+circuit.rx(1, np.pi / 2)
+circuit.ry(1, np.pi / 4)
+circuit.cz(0, 1)
+circuit.rx(1, np.pi / 2)
+circuit.ry(1, np.pi / 4)
+
+psi = circuit.state("11")
+result = circuit.run(psi, step_rate=20)
+
+# print(circuit.t, result.times)
+state_idx = [0, -1]
+if state_idx:
+    computational_basis_blochs([result.states[i] for i in state_idx], "rb")
+computational_basis_blochs(result.states, "rb")
+
+print(qutip.expect(circuit.rr[0], result.states[0::10]))
+print(qutip.expect(circuit.rr[1], result.states[0::10]))
+len(result.states)
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mTypeError[0m                                 Traceback (most recent call last)
+Input [0;32mIn [5][0m, in [0;36m<cell line: 27>[0;34m()[0m
+[1;32m     24[0m circuit[38;5;241m.[39mry([38;5;241m1[39m, np[38;5;241m.[39mpi [38;5;241m/[39m [38;5;241m4[39m)
+[1;32m     26[0m psi [38;5;241m=[39m circuit[38;5;241m.[39mstate([38;5;124m"[39m[38;5;124m11[39m[38;5;124m"[39m)
+[0;32m---> 27[0m result [38;5;241m=[39m [43mcircuit[49m[38;5;241;43m.[39;49m[43mrun[49m[43m([49m[43mpsi[49m[43m,[49m[43m [49m[43mstep_rate[49m[38;5;241;43m=[39;49m[38;5;241;43m20[39;49m[43m)[49m
+[1;32m     29[0m [38;5;66;03m# print(circuit.t, result.times)[39;00m
+[1;32m     30[0m state_idx [38;5;241m=[39m [[38;5;241m0[39m, [38;5;241m-[39m[38;5;241m1[39m]
+
+[0;31mTypeError[0m: run() got an unexpected keyword argument 'step_rate'
+TypeError: run() got an unexpected keyword argument 'step_rate'
+
